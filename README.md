@@ -13,7 +13,6 @@ npm install @universal-packages/express-controllers-session
 
 npm install express
 npm install @universal-packages/express-controllers
-npm install @universal-packages/express-session
 ```
 
 ## Global middleware
