@@ -19,7 +19,8 @@ npm install @universal-packages/express-controllers
 
 By installing this package a global middleware is going to be loaded automatically by the `ExpressApp`.
 
-### initialize([options: ExpressSessionOptions])
+## Global methods
+#### **`initialize([options: ExpressSessionOptions])`**
 
 Set up the global middleware session options before loading the `ExpressApp`.
 
@@ -37,11 +38,12 @@ initialize({ engine })
 await expressApp.prepare()
 ```
 
-### Options
+#### Options
 
 Same options as [express-session](https://github.com/universal-packages/universal-express-session#options).
 
-## @AuthenticateAction
+## Decorators
+#### **`@AuthenticateAction()`**
 
 You can use @AuthenticateAction to quickly end request when no session is present at action level.
 
@@ -59,7 +61,7 @@ export default class GoodController extends BaseController {
 }
 ```
 
-## @AuthenticateController
+#### **`@AuthenticateController()`**
 
 You can use @AuthenticateController to quickly end request when no session is present for every action in a controller.
 
