@@ -28,12 +28,7 @@ Set up the global middleware session options before loading the `ExpressApp`.
 import { initialize } from '@universal-packages/express-controllers-session'
 import { RedisEngine } from '@universal-packages/universal-token-registry-redis'
 
-const engine = new RedisEngine({ host: 'localhost' })
-await engine.connect()
-
-initialize({ engine })
-
-//...
+initialize({ engine: 'redis', engineOptions: { host: 'localhost' }  })
 
 await expressApp.prepare()
 ```
