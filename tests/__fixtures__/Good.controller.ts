@@ -1,4 +1,5 @@
 import { BaseController, Controller, Get, Post } from '@universal-packages/express-controllers'
+
 import { AuthenticateAction } from '../../src'
 
 @Controller('good')

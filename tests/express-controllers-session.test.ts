@@ -1,6 +1,7 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
 import { MemoryEngine } from '@universal-packages/token-registry'
 import fetch from 'node-fetch'
+
 import { initialize } from '../src'
 
 const port = 4000 + Number(process.env['JEST_WORKER_ID'])

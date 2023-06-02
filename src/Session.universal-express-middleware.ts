@@ -1,5 +1,6 @@
 import { BaseMiddleware, Middleware } from '@universal-packages/express-controllers'
 import { injectSession } from '@universal-packages/express-session'
+
 import { CURRENT_OPTIONS } from './express-controllers-session'
 
 @Middleware()
