@@ -1,6 +1,5 @@
 import { ExpressApp } from '@universal-packages/express-controllers'
 import { MemoryEngine } from '@universal-packages/token-registry'
-import fetch from 'node-fetch'
 
 import { initialize } from '../src'
 
@@ -21,48 +20,35 @@ describe('express-controllers-session', (): void => {
     await app.run()
 
     // Authenticated action plus login
-    let response = await fetch(`http://localhost:${port}/good/login`)
-    expect(response.status).toBe(200)
-    const body = await response.json()
+    await fGet('/good/login')
+    expect(fResponse).toHaveReturnedWithStatus('OK')
+    expect(fResponseBody).toEqual({ token: expect.any(String) })
 
-    response = await fetch(`http://localhost:${port}/good/private`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
-    })
-    expect(response.status).toBe(401)
+    const loginToken = fResponseBody.token
 
-    response = await fetch(`http://localhost:${port}/good/private`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `bearer ${body.token}` }
-    })
-    expect(response.status).toBe(200)
-    expect(await response.json()).toEqual({ id: '10' })
+    await fPost('/good/private', {})
+    expect(fResponse).toHaveReturnedWithStatus('UNAUTHORIZED')
 
-    // AUthenticated controller
-    response = await fetch(`http://localhost:${port}/excellent/private_1`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
-    })
-    expect(response.status).toBe(401)
+    fAuthorization(`bearer ${loginToken}`)
+    await fPost('/good/private', {})
+    expect(fResponse).toHaveReturnedWithStatus('OK')
+    expect(fResponseBody).toEqual({ id: '10' })
 
-    response = await fetch(`http://localhost:${port}/excellent/private_2`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
-    })
-    expect(response.status).toBe(401)
+    // Authenticated controller
+    fAuthorization(undefined)
+    await fPost('/excellent/private_1', {})
+    expect(fResponse).toHaveReturnedWithStatus('UNAUTHORIZED')
 
-    response = await fetch(`http://localhost:${port}/excellent/private_1`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `bearer ${body.token}` }
-    })
-    expect(response.status).toBe(200)
-    expect(await response.json()).toEqual({ id: '10' })
+    await fPost('/excellent/private_2', {})
+    expect(fResponse).toHaveReturnedWithStatus('UNAUTHORIZED')
 
-    response = await fetch(`http://localhost:${port}/excellent/private_2`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `bearer ${body.token}` }
-    })
-    expect(response.status).toBe(200)
-    expect(await response.json()).toEqual({ id: '10' })
+    fAuthorization(`bearer ${loginToken}`)
+    await fPost('/excellent/private_1', {})
+    expect(fResponse).toHaveReturnedWithStatus('OK')
+    expect(fResponseBody).toEqual({ id: '10' })
+
+    await fPost('/excellent/private_2', {})
+    expect(fResponse).toHaveReturnedWithStatus('OK')
+    expect(fResponseBody).toEqual({ id: '10' })
   })
 })
