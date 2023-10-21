@@ -1,23 +1,12 @@
-import { ExpressApp } from '@universal-packages/express-controllers'
 import { MemoryEngine } from '@universal-packages/token-registry'
 
 import { initialize } from '../src'
-
-const port = 4000 + Number(process.env['JEST_WORKER_ID'])
-
-let app: ExpressApp
-afterEach(async (): Promise<void> => {
-  await app.stop()
-})
 
 describe('express-controllers-session', (): void => {
   it('It executed configured middleware all across controllers', async (): Promise<void> => {
     initialize({ cookieName: 'session', engine: new MemoryEngine(), registryId: 'app', trackSessionAccess: false })
 
-    app = new ExpressApp({ appLocation: './tests/__fixtures__', port })
-    app.on('request/error', console.log)
-    await app.prepare()
-    await app.run()
+    await runExpressApp()
 
     // Authenticated action plus login
     await fGet('/good/login')
