@@ -16,7 +16,7 @@
     "update-dependents": "umaintenance update-dependents"
   },
   "dependencies": {
-    "@universal-packages/express-session": "^1.6.4"
+    "@universal-packages/express-session": "^1.6.5"
   },
   "peerDependencies": {
     "@universal-packages/express-controllers": "^1.10.0"
