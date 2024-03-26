@@ -17,12 +17,12 @@ npm install @universal-packages/express-controllers
 
 ## Global middleware
 
-By installing this package a global middleware is going to be loaded automatically by the `ExpressApp`.
+By installing this package a global middleware is going to be loaded automatically by the `ExpressControllers`.
 
 ## Global methods
 #### **`initialize([options: ExpressSessionOptions])`**
 
-Set up the global middleware session options before loading the `ExpressApp`.
+Set up the global middleware session options before loading the `ExpressControllers`.
 
 ```js
 import { initialize } from '@universal-packages/express-controllers-session'
@@ -30,7 +30,7 @@ import { RedisEngine } from '@universal-packages/universal-token-registry-redis'
 
 initialize({ engine: 'redis', engineOptions: { host: 'localhost' }  })
 
-await expressApp.prepare()
+await expressControllers.prepare()
 ```
 
 #### Options

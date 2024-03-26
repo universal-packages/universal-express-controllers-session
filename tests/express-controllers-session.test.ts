@@ -6,7 +6,7 @@ describe('express-controllers-session', (): void => {
   it('It executed configured middleware all across controllers', async (): Promise<void> => {
     initialize({ cookieName: 'session', engine: new MemoryEngine(), registryId: 'app', trackSessionAccess: false })
 
-    await runExpressApp()
+    await runExpressControllers()
 
     // Authenticated action plus login
     await fGet('/good/login')
