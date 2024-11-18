@@ -83,7 +83,7 @@ import { ActionUse, ControllerUse } from '@universal-packages/express-controller
 
 async function authenticateRequest(request, response, next) {
   if (request.session.authenticated) {
-    request.currentUser = await User.findById(request.session.authenticatableId)
+    request.currentUser = await User.findById(request.session.userId)
 
     next()
   } else {

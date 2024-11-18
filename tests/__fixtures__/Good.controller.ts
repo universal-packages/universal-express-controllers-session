@@ -14,6 +14,6 @@ export default class GoodController extends BaseController {
   @Post('private')
   @AuthenticateAction()
   public async postEnd(): Promise<void> {
-    this.json({ id: this.request.session.authenticatableId })
+    this.json({ id: this.request.session.userId })
   }
 }

@@ -7,11 +7,11 @@ import { AuthenticateController } from '../../src'
 export default class ExcellentController extends BaseController {
   @Post('private_1')
   public async getEnd(): Promise<void> {
-    this.json({ id: this.request.session.authenticatableId })
+    this.json({ id: this.request.session.userId })
   }
 
   @Post('private_2')
   public async postEnd(): Promise<void> {
-    this.json({ id: this.request.session.authenticatableId })
+    this.json({ id: this.request.session.userId })
   }
 }
